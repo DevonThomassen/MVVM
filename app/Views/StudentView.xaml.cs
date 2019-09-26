@@ -13,24 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace app
+namespace app.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for StudentView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StudentView : UserControl
     {
-        public MainWindow()
+        public StudentView()
         {
             InitializeComponent();
-        }
 
-        private void StudentViewControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            app.ViewModel.StudentViewModel studentViewModelObject = new app.ViewModel.StudentViewModel();
-            studentViewModelObject.LoadStudents();
-
-            StudentViewControl.DataContext = studentViewModelObject;
+            // CSharp methode of datacontext instead of XAML
+            // this.DataContext = new app.ViewModel.StudentViewModel();
         }
     }
 }
