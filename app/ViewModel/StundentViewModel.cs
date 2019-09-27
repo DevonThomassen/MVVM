@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 
 using app.Model;
+using app.ICommands;
 using System.Collections.ObjectModel;
 
 namespace app.ViewModel
@@ -13,10 +14,12 @@ namespace app.ViewModel
 
     public class StudentViewModel
     {
+        public MyICommand DeleteCommand { get; set; }
 
         public StudentViewModel()
         {
             LoadStudents();
+            DeleteCommand = new MyICommand(OnDelete, CanDelete);
         }
 
         public ObservableCollection<Student> Students
@@ -34,6 +37,32 @@ namespace app.ViewModel
             students.Add(new Student { FirstName = "Linda", LastName = "Hamerski" });
 
             Students = students;
+        }
+
+        private Student _selectedStudent;
+
+        public Student SelectedStudent
+        {
+            get
+            {
+                return _selectedStudent;
+            }
+
+            set
+            {
+                _selectedStudent = value;
+                DeleteCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private void OnDelete()
+        {
+            Students.Remove(SelectedStudent);
+        }
+
+        private bool CanDelete()
+        {
+            return SelectedStudent != null;
         }
     }
 }
